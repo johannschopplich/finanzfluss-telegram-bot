@@ -5,7 +5,7 @@
 <h1 align="center">Finanzfluss Telegram Bot</h3>
 
 <p align="center">
-  Inofficial Telegram bot for <a href="https://finanzfluss.de">finanzfluss.de</a>
+  Unofficial Telegram bot for <a href="https://finanzfluss.de">finanzfluss.de</a>
 </p>
 
 <br>
