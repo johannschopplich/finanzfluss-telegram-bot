@@ -17,8 +17,6 @@ jobs:
           cache: pnpm
 
       - run: pnpm install
-      # Create empty `.env` file for `tsx` command
-      - run: touch .env
       - run: pnpm run build
         env:
           NITRO_PRESET: cloudflare_pages
