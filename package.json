@@ -1,0 +1,29 @@
+{
+  "name": "ff-telegram-bot",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@9.12.1",
+  "scripts": {
+    "dev": "tsx scripts/prepare.ts && nitro dev",
+    "build": "tsx scripts/prepare.ts && nitro build",
+    "preview": "node .output/server/index.mjs",
+    "test:types": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier \"**/*.{css,html,json,md,ts,tsx,yml}\" --write",
+    "prepare": "NITRO_PREPARE=true nitro prepare"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.7.3",
+    "@grammyjs/emoji": "^1.2.0",
+    "@grammyjs/menu": "^1.2.2",
+    "cheerio": "^1.0.0",
+    "eslint": "^9.12.0",
+    "grammy": "^1.30.0",
+    "nitropack": "^2.9.7",
+    "prettier": "^3.3.3",
+    "tsx": "^4.19.1",
+    "typescript": "^5.5.4",
+    "valibot": "^1.0.0-beta.1"
+  }
+}
