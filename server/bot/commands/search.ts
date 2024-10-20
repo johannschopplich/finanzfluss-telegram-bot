@@ -1,8 +1,9 @@
+import type { FFContext } from '../types'
 import { Composer } from 'grammy'
 import { ofetch } from 'ofetch'
 import { joinURL } from 'ufo'
 
-const composer = new Composer()
+const composer = new Composer<FFContext>()
 
 const SEARCH_CATEGORIES = {
   all: {

@@ -22,7 +22,21 @@ export default defineNitroConfig({
     webhookToken: process.env.WEBHOOK_SECRET,
   },
 
+  storage: {
+    kv: {
+      driver: 'cloudflareKVBinding',
+      binding: 'KV',
+    },
+  },
+  devStorage: {
+    kv: {
+      driver: 'fs',
+      base: '.data/kv',
+    },
+  },
+
   experimental: {
-    tasks: !process.env.NITRO_PRESET,
+    tasks: process.env.NITRO_PRESET !== undefined,
+    asyncContext: true,
   },
 })

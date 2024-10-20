@@ -33,3 +33,7 @@ ${maskToken(JSON.stringify(info, undefined, 2))}
     }
   },
 })
+
+function maskSecret(secret: string) {
+  return (value: string) => value.replaceAll(secret, '*'.repeat(secret.length))
+}

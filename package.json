@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.7.3",
+    "@grammyjs/conversations": "^1.2.0",
     "@grammyjs/emoji": "^1.2.0",
     "@grammyjs/menu": "^1.2.2",
     "cheerio": "^1.0.0",

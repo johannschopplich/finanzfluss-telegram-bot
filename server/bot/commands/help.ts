@@ -1,6 +1,7 @@
+import type { FFContext } from '../types'
 import { Composer } from 'grammy'
 
-export const composer = new Composer()
+const composer = new Composer<FFContext>()
 
 composer.command('help', async (ctx) => {
   await ctx.reply(

@@ -1,6 +1,7 @@
+import type { FFContext } from '../types'
 import { Composer } from 'grammy'
 
-const composer = new Composer()
+const composer = new Composer<FFContext>()
 
 composer.command('id', async (ctx) => {
   if (ctx.message?.reply_to_message?.from?.id) {

@@ -1,6 +1,7 @@
+import type { FFContext } from '../types'
 import { Composer, InlineKeyboard } from 'grammy'
 
-const composer = new Composer()
+const composer = new Composer<FFContext>()
 
 composer.command('start', async (ctx) => {
   const keyboard = new InlineKeyboard()

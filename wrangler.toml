@@ -1,3 +1,7 @@
 name = "ff-telegram-bot"
 pages_build_output_dir = "./dist"
 compatibility_date = "2024-08-23"
+
+[[kv_namespaces]]
+id = "332da27afcfd4140bf77dfc1d86f3c71"
+binding = "KV"
