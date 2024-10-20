@@ -36,7 +36,7 @@ export default defineNitroConfig({
   },
 
   experimental: {
-    tasks: process.env.NITRO_PRESET !== undefined,
+    tasks: process.env.NITRO_PRESET === undefined,
     asyncContext: true,
   },
 })

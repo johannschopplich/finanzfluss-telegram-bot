@@ -44,17 +44,16 @@ const QUESTIONS: Question[] = [
 
 async function adventGame(conversation: FFConversation, ctx: FFContext) {
   const currentDate = await conversation.external(() => new Date())
-  const currentMonth = currentDate.getMonth()
   const currentDay = currentDate.getDate()
 
-  if (!canOpenCalendar(currentMonth)) {
+  if (!canOpenCalendar(currentDate)) {
     await ctx.reply(
       '🎄 Der große Finanzfluss Adventskalender 2024 beginnt am 1. Dezember!',
     )
     return
   }
 
-  if (!canOpenDoor(currentDay)) {
+  if (!canOpenDoor(currentDate)) {
     await ctx.reply('🎄 Heute gibt es kein Türchen zum Öffnen.')
     return
   }
@@ -66,23 +65,25 @@ async function adventGame(conversation: FFConversation, ctx: FFContext) {
     return
   }
 
-  await ctx.reply(
-    `
+  const isFirstDay = currentDay === GAME_START_DAY
+  if (isFirstDay) {
+    await ctx.reply(
+      `
 🎄 Das ist der große Finanzfluss Adventskalender 2024!
 
 Jeden Tag kannst du ein Türchen öffnen und eine Frage beantworten. Beantworte die Frage richtig und sammle Punkte. Am 24. Dezember gibt es eine besondere Überraschung!
       `.trim(),
-  )
+    )
+  }
 
   const todaysQuestion = QUESTIONS[currentDay - 1].question
-  const expectedAnswer =
-    currentDay === GAME_START_DAY
-      ? INITIAL_ANSWER
-      : QUESTIONS[currentDay - 2].answer
+  const expectedAnswer = isFirstDay
+    ? INITIAL_ANSWER
+    : QUESTIONS[currentDay - 2].answer
 
   await ctx.reply(todaysQuestion)
 
-  const { message } = await conversation.waitFor('message:text', {
+  const { msg } = await conversation.waitFor(':text', {
     maxMilliseconds: ANSWER_TIMEOUT_MS,
     otherwise: () =>
       ctx.reply(
@@ -90,9 +91,9 @@ Jeden Tag kannst du ein Türchen öffnen und eine Frage beantworten. Beantworte 
       ),
   })
 
-  if (!message) return
+  if (!msg) return
 
-  const isCorrect = isAnswerCorrect(message.text, expectedAnswer)
+  const isCorrect = isAnswerCorrect(msg.text, expectedAnswer)
   if (isCorrect) {
     conversation.session.adventScore++
     await ctx.reply('Das war richtig! 🎉')
@@ -109,13 +110,14 @@ Jeden Tag kannst du ein Türchen öffnen und eine Frage beantworten. Beantworte 
 
 export default adventGame
 
-function canOpenCalendar(month: number) {
+function canOpenCalendar(date: Date) {
   // TODO: Revert
-  if (false) return month === GAME_START_MONTH
+  if (false) return date.getMonth() === GAME_START_MONTH
   return true
 }
 
-function canOpenDoor(day: number) {
+function canOpenDoor(date: Date) {
+  const day = date.getDate()
   return day >= GAME_START_DAY && day <= GAME_END_DAY
 }
 
