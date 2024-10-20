@@ -20,7 +20,9 @@ export function createBot() {
   bot.use(conversations())
 
   bot.use(ffCommands)
-  bot.use(...ffConversations.map(([fn, name]) => createConversation(fn, name)))
+  for (const [name, cb] of Object.entries(ffConversations)) {
+    bot.use(createConversation(cb, name))
+  }
 
   return bot
 }

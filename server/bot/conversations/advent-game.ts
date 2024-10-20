@@ -120,12 +120,10 @@ function canOpenDoor(day: number) {
 }
 
 function hasAnsweredToday(conversation: FFConversation, day: number) {
-  const answeredDays = conversation.session.answeredDays || []
-  return answeredDays.includes(day)
+  return conversation.session.answeredDays.includes(day)
 }
 
 function markDayAsAnswered(conversation: FFConversation, day: number) {
-  conversation.session.answeredDays = conversation.session.answeredDays || []
   conversation.session.answeredDays.push(day)
 }
 
