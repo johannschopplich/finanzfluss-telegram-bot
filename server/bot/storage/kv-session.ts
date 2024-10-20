@@ -12,12 +12,12 @@ export class KVStorageAdapter<T> implements StorageAdapter<T> {
   }
 
   async read(key: string): Promise<T | undefined> {
-    const session = await this.storage.getItem<string>(key)
-    return session === null ? undefined : JSON.parse(session)
+    if (!(await this.storage.hasItem(key))) return undefined
+    ;(await this.storage.getItem(key)) as T
   }
 
   async write(key: string, data: T) {
-    await this.storage.setItem(key, JSON.stringify(data))
+    await this.storage.setItem(key, data as StorageValue)
   }
 
   async delete(key: string) {
