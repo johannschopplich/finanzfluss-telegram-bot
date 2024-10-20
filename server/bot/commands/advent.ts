@@ -122,10 +122,17 @@ export default composer
 export { adventMenu }
 
 function decodeContextPayload(payload = '') {
-  const [day, currentPage = '1'] = payload.split(':')
+  const [day, currentPage] = payload.split(':')
+  const currentDate = new Date()
+  const currentDay = currentDate.getDate()
+
+  // Only calculate page in December
+  const calculatedPage = canOpenCalendar(currentDate)
+    ? getPageForDay(currentDay)
+    : 1
   return {
     day: day === '' || day === '_' ? undefined : Number.parseInt(day),
-    currentPage: Number.parseInt(currentPage),
+    currentPage: currentPage ? Number.parseInt(currentPage) : calculatedPage,
   }
 }
 
@@ -137,12 +144,17 @@ function getAdventContent(day: number) {
   return adventContent[day] || 'Überraschung!'
 }
 
+function getPageForDay(day: number) {
+  return Math.ceil(day / ITEMS_PER_PAGE)
+}
+
+function canOpenCalendar(date = new Date()) {
+  const currentMonth = date.getMonth()
+  return currentMonth === 11
+}
+
 function canOpenDoor(day: number) {
-  const now = new Date()
-  const currentMonth = now.getMonth()
-
-  // Only allow opening doors in December of the current year
-  if (currentMonth !== 11) return false
-
-  return day <= now.getDate()
+  const currentDate = new Date()
+  if (!canOpenCalendar(currentDate)) return false
+  return day <= currentDate.getDate()
 }
