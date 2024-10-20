@@ -11,7 +11,7 @@ const GAME_START_DAY = 1
 const GAME_END_DAY = 24
 const ANSWER_TIMEOUT_MS = 30 * 1000
 
-const questions: Question[] = [
+const QUESTIONS: Question[] = [
   { question: 'Wie heißt das deutsche Parlament?', answer: 'Bundestag' },
   { question: 'Was ist der erste Tag des Jahres?', answer: 'Neujahr' },
   { question: 'Wann kommt der Osterhase?', answer: 'Ostern' },
@@ -74,11 +74,11 @@ Jeden Tag kannst du ein Türchen öffnen und eine Frage beantworten. Beantworte 
       `.trim(),
   )
 
-  const todaysQuestion = questions[currentDay - 1].question
+  const todaysQuestion = QUESTIONS[currentDay - 1].question
   const expectedAnswer =
     currentDay === GAME_START_DAY
       ? INITIAL_ANSWER
-      : questions[currentDay - 2].answer
+      : QUESTIONS[currentDay - 2].answer
 
   await ctx.reply(todaysQuestion)
 
