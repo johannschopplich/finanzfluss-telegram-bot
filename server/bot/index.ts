@@ -3,6 +3,7 @@ import { conversations, createConversation } from '@grammyjs/conversations'
 import { Bot, session } from 'grammy'
 import { commands as ffCommands } from './commands'
 import { conversations as ffConversations } from './conversations'
+import { logMiddleware } from './middleware/log'
 import { KVStorageAdapter } from './storage/kv-session'
 
 export function createBot() {
@@ -18,6 +19,10 @@ export function createBot() {
     }),
   )
   bot.use(conversations())
+
+  if (import.meta.dev) {
+    logMiddleware(bot)
+  }
 
   bot.use(
     ...Object.entries(ffConversations).map(([name, cb]) =>

@@ -85,10 +85,12 @@ Jeden Tag kannst du ein Türchen öffnen und eine Frage beantworten. Beantworte 
 
   const { msg } = await conversation.waitFor(':text', {
     maxMilliseconds: ANSWER_TIMEOUT_MS,
-    otherwise: () =>
-      ctx.reply(
+    async otherwise() {
+      await ctx.deleteMessage()
+      await ctx.reply(
         `Zeit abgelaufen. Die richtige Antwort war: ${expectedAnswer}. Versuche es morgen erneut!`,
-      ),
+      )
+    },
   })
 
   if (!msg) return
