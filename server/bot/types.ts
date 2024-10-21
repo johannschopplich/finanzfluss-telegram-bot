@@ -9,4 +9,5 @@ export interface SessionData {
 export type FFContext = Context &
   SessionFlavor<SessionData> &
   ConversationFlavor
+
 export type FFConversation = Conversation<FFContext>

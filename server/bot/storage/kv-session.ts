@@ -1,7 +1,9 @@
 import type { StorageAdapter } from 'grammy/web'
 import type { Storage, StorageValue } from 'unstorage'
 
-export class KVStorageAdapter<T> implements StorageAdapter<T> {
+export class KVStorageAdapter<T extends StorageValue>
+  implements StorageAdapter<T>
+{
   private storage: Storage<StorageValue>
 
   constructor(
@@ -13,11 +15,11 @@ export class KVStorageAdapter<T> implements StorageAdapter<T> {
 
   async read(key: string): Promise<T | undefined> {
     if (!(await this.storage.hasItem(key))) return undefined
-    ;(await this.storage.getItem(key)) as T
+    await this.storage.getItem<T>(key)
   }
 
   async write(key: string, data: T) {
-    await this.storage.setItem(key, data as StorageValue)
+    await this.storage.setItem(key, data)
   }
 
   async delete(key: string) {
